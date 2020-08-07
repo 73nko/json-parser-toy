@@ -5,7 +5,7 @@ use nom::multi::separated_list;
 use nom::sequence::{delimited, separated_pair};
 
 use crate::{json_value, Node};
-use crate::string_parser::string_literal;
+use crate::parsers::string_parser::string_literal;
 use crate::utils::{JSONParseError, spacey};
 
 // "key: value", where key and value are any JSON type.

@@ -4,9 +4,9 @@ use nom::character::complete::digit1;
 use nom::combinator::{opt, recognize};
 use nom::sequence::{pair, tuple};
 
-use crate::integer_parser::uint;
 use crate::JSONParseError;
 use crate::Node;
+use crate::parsers::integer_parser::uint;
 
 // number = [ minus ] int [ frac ] [ exp ]
 //

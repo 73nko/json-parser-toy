@@ -1,23 +1,19 @@
 use nom::{branch::alt, IResult};
 use nom::combinator::all_consuming;
 
-use array_parser::json_array;
-use bool_parser::json_bool;
-use float_parser::json_float;
-use integer_parser::json_integer;
-use null_parser::json_null;
-use object_parser::json_object;
-use string_parser::json_string;
+use parsers::{
+    array_parser::json_array,
+    bool_parser::json_bool,
+    float_parser::json_float,
+    integer_parser::json_integer,
+    null_parser::json_null,
+    object_parser::json_object,
+    string_parser::json_string,
+};
 use utils::{JSONParseError, spacey};
 
 mod utils;
-mod integer_parser;
-mod float_parser;
-mod string_parser;
-mod bool_parser;
-mod null_parser;
-mod array_parser;
-mod object_parser;
+mod parsers;
 
 
 #[derive(PartialEq, Debug, Clone)]
