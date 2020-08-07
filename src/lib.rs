@@ -1,17 +1,13 @@
-
-
 use nom::{branch::alt, IResult};
-use nom::bytes::complete::tag;
-use nom::combinator::{all_consuming, map};
-use nom::multi::separated_list;
-use nom::sequence::{delimited, separated_pair};
+use nom::combinator::all_consuming;
 
 use array_parser::json_array;
 use bool_parser::json_bool;
 use float_parser::json_float;
 use integer_parser::json_integer;
 use null_parser::json_null;
-use string_parser::{json_string, string_literal};
+use object_parser::json_object;
+use string_parser::json_string;
 use utils::{JSONParseError, spacey};
 
 mod utils;
@@ -21,6 +17,7 @@ mod string_parser;
 mod bool_parser;
 mod null_parser;
 mod array_parser;
+mod object_parser;
 
 
 #[derive(PartialEq, Debug, Clone)]
@@ -57,36 +54,6 @@ fn json_value(input: &str) -> IResult<&str, Node, JSONParseError> {
     )))(input)
 }
 
-
-// "key: value", where key and value are any JSON type.
-fn object_member(input: &str) -> IResult<&str, (String, Node), JSONParseError> {
-    separated_pair(string_literal, spacey(tag(":")), json_value)
-        (input)
-}
-
-fn json_object(input: &str) -> IResult<&str, Node, JSONParseError> {
-    let parser = delimited(
-        spacey(tag("{")),
-        separated_list(
-            spacey(tag(",")),
-            object_member,
-        ),
-        spacey(tag("}")),
-    );
-    map(parser, |v| {
-        Node::Object(v)
-    })
-        (input)
-}
-
-
-
-#[test]
-fn test_object() {
-    assert_eq!(json_object("{ }"), Ok(("", Node::Object(vec![]))));
-    let expected = Node::Object(vec![("1".into(), Node::Integer(2))]);
-    assert_eq!(json_object(r#" { "1" : 2 } "#), Ok(("", expected)));
-}
 
 #[test]
 fn test_values() {

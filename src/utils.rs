@@ -2,8 +2,8 @@ use nom::{branch::alt, IResult};
 use nom::bytes::complete::tag;
 use nom::character::complete::multispace0;
 use nom::combinator::recognize;
-use nom::sequence::{delimited, pair};
 use nom::error::{ErrorKind, ParseError};
+use nom::sequence::{delimited, pair};
 
 #[derive(thiserror::Error, Debug, PartialEq)]
 pub enum JSONParseError {
@@ -58,7 +58,7 @@ pub fn escape_code(input: &str) -> IResult<&str, &str, JSONParseError> {
                 tag("r"),
                 tag("t"),
                 tag("u"),
-            ))
+            )),
         )
     )
         (input)

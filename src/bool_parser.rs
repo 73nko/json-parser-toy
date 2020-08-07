@@ -1,9 +1,9 @@
-use crate::utils::JSONParseError;
-use crate::Node;
-
 use nom::{branch::alt, IResult};
-use nom::combinator::value;
 use nom::bytes::complete::tag;
+use nom::combinator::value;
+
+use crate::Node;
+use crate::utils::JSONParseError;
 
 pub fn json_bool(input: &str) -> IResult<&str, Node, JSONParseError> {
     alt((
@@ -12,7 +12,6 @@ pub fn json_bool(input: &str) -> IResult<&str, Node, JSONParseError> {
     ))
         (input)
 }
-
 
 
 #[test]

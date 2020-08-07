@@ -1,11 +1,11 @@
 use nom::{branch::alt, IResult};
-use nom::character::complete::{digit0, one_of};
-use nom::sequence::pair;
 use nom::bytes::complete::tag;
-use nom::combinator::{recognize, opt};
+use nom::character::complete::{digit0, one_of};
+use nom::combinator::{opt, recognize};
+use nom::sequence::pair;
 
-use crate::Node;
 use crate::JSONParseError;
+use crate::Node;
 
 // This can be done a few different ways:
 // one_of("123456789"),
